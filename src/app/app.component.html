@@ -1,4 +1,4 @@
-<div class="title">Contact Manager</div>
+<!-- <div class="title">Contact Manager</div>
 <div>
   <button (click)="listingsView()">Listings</button
   ><button (click)="addingView()">Add Contact</button>
@@ -6,17 +6,19 @@
 <div>
   <ul>
     @if (listView) { @for (contact of contacts; track contact.id) {
-      <div class="container my-3">
-        <div class="row my-3">
-          <div class="card text-bg-info p-5">
-            Name: {{ contact.firstName }} {{ contact.lastName }}<br />
-            Phone: {{ contact.number }} <br />
-            Email: {{ contact.email }} <br />
-            <button (click)="editContact(contact.id)">Edit</button>
-            <button (click)="deleteContact(contact.id)">Delete</button>
-          </div>
+    <div class="container my-3">
+      <div class="row my-3">
+        <div class="card text-bg-info p-5">
+          Name: {{ contact.firstName }} {{ contact.lastName }}<br />
+          Phone: {{ contact.number }} <br />
+          Email: {{ contact.email }} <br />
+          <button class="btn btn-primary" (click)="editContact(contact.id)">
+            Edit
+          </button>
+          <button (click)="deleteContact(contact.id)">Delete</button>
         </div>
       </div>
+    </div>
     } }
   </ul>
 </div>
@@ -33,4 +35,93 @@
   <button (click)="submitContact()">Submit contact</button>
   }
 </div>
-}
+} -->
+
+<div class="container my-4">
+  <h1 class="text-center mb-4 text-primary">Contact Manager</h1>
+
+  <!-- View Toggle Buttons -->
+  <div class="d-flex justify-content-center gap-3 mb-4">
+    <button class="btn btn-outline-primary" (click)="listingsView()">
+      Listings
+    </button>
+    <button class="btn btn-outline-success" (click)="addingView()">
+      Add Contact
+    </button>
+  </div>
+
+  <!-- Contact List -->
+  <div>
+    <ul class="list-unstyled">
+      @if (listView) { @for (contact of contacts; track contact.id) {
+      <li class="card mb-3 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">
+            {{ contact.firstName }} {{ contact.lastName }}
+          </h5>
+          <p class="card-text mb-1">
+            <strong>Phone:</strong> {{ contact.number }}
+          </p>
+          <p class="card-text mb-3">
+            <strong>Email:</strong> {{ contact.email }}
+          </p>
+          <div class="d-flex gap-2">
+            <button
+              class="btn btn-sm btn-primary"
+              (click)="editContact(contact.id)"
+            >
+              Edit
+            </button>
+            <button
+              class="btn btn-sm btn-danger"
+              (click)="deleteContact(contact.id)"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </li>
+      } }
+    </ul>
+  </div>
+
+  <!-- Add/Edit Form -->
+  @if (!listView) {
+  <div class="card p-4 shadow-sm">
+    <h5 class="mb-3">{{ editMode ? "Edit Contact" : "Add Contact" }}</h5>
+
+    <div class="mb-2">
+      <label class="form-label">First Name:</label>
+      <input type="text" class="form-control" [(ngModel)]="fName" />
+    </div>
+
+    <div class="mb-2">
+      <label class="form-label">Last Name:</label>
+      <input type="text" class="form-control" [(ngModel)]="lName" />
+    </div>
+
+    <div class="mb-2">
+      <label class="form-label">Phone Number:</label>
+      <input type="text" class="form-control" [(ngModel)]="phone" />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Email:</label>
+      <input type="text" class="form-control" [(ngModel)]="email" />
+    </div>
+
+    <div class="d-flex justify-content-end gap-2">
+      <button class="btn btn-danger" (click)="cancelButton()">Cancel</button>
+      @if (editMode) {
+      <button class="btn btn-success" (click)="submitChanges()">
+        Save Changes
+      </button>
+      } @else {
+      <button class="btn btn-success" (click)="submitContact()">
+        Submit Contact
+      </button>
+      }
+    </div>
+  </div>
+  }
+</div>
