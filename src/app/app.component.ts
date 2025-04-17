@@ -157,12 +157,12 @@ submitChanges() {
 
 
   submitContact() {
-    const newId = this.contacts.length > 0
-    ? this.contacts[this.contacts.length - 1].id + 1
-    : 1;
+    const maxId = this.contacts.length
+    ? Math.max(...this.contacts.map(c => c.id))
+    : 0;
 
   const newContact: Contact = {
-    id: newId,
+    id: maxId + 1,
     firstName: this.fName,
     lastName: this.lName,
     number: this.phone,
@@ -170,8 +170,7 @@ submitChanges() {
   };
 
   this.contacts.push(newContact);
-
-  this.contacts = [...this.contacts];
+  this.contacts = this.contactService.getContacts();
 
   this.listingsView();
   this.clearForm();
